@@ -5,24 +5,33 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 @Entity(name = "speakers")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Speaker {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long speaker_id;
+    @Column(name="speaker_id")
+    private Long speakerId;
 
-    private String first_name;
-    private String last_name;
+    @Column(name="first_name")
+    private String firstName;
+    @Column(name="last_name")
+    private String lastName;
+    @Column(name="title")
     private String title;
+    @Column(name="company")
     private String company;
-    private String speaker_bio;
+    @Column(name="speaker_bio")
+    private String speakerBio;
 
     @Lob
     @Type(type = "org.hibernate.type.BinaryType")
-    private byte[] speaker_photo;
+    @Column(name="speaker_photo")
+    private byte[] speakerPhoto;
 
     @ManyToMany(mappedBy = "speakers")
     @JsonIgnore
@@ -31,28 +40,54 @@ public class Speaker {
     public Speaker() {
     }
 
-    public Long getSpeaker_id() {
-        return speaker_id;
+    public Speaker(Long speakerId, String firstName, String lastName, String title, String company, String speakerBio, byte[] speakerPhoto, List<Session> sessions) {
+        this.speakerId = speakerId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.title = title;
+        this.company = company;
+        this.speakerBio = speakerBio;
+        this.speakerPhoto = speakerPhoto;
+        this.sessions = sessions;
     }
 
-    public void setSpeaker_id(Long speaker_id) {
-        this.speaker_id = speaker_id;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Speaker speaker = (Speaker) o;
+        return speakerId.equals(speaker.speakerId) && firstName.equals(speaker.firstName) && lastName.equals(speaker.lastName) && title.equals(speaker.title) && company.equals(speaker.company) && speakerBio.equals(speaker.speakerBio) && Arrays.equals(speakerPhoto, speaker.speakerPhoto) && sessions.equals(speaker.sessions);
     }
 
-    public String getFirst_name() {
-        return first_name;
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(speakerId, firstName, lastName, title, company, speakerBio, sessions);
+        result = 31 * result + Arrays.hashCode(speakerPhoto);
+        return result;
     }
 
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+    public Long getSpeakerId() {
+        return speakerId;
     }
 
-    public String getLast_name() {
-        return last_name;
+    public void setSpeakerId(Long speakerId) {
+        this.speakerId = speakerId;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getTitle() {
@@ -71,20 +106,20 @@ public class Speaker {
         this.company = company;
     }
 
-    public String getSpeaker_bio() {
-        return speaker_bio;
+    public String getSpeakerBio() {
+        return speakerBio;
     }
 
-    public void setSpeaker_bio(String speaker_bio) {
-        this.speaker_bio = speaker_bio;
+    public void setSpeakerBio(String speakerBio) {
+        this.speakerBio = speakerBio;
     }
 
-    public byte[] getSpeaker_photo() {
-        return speaker_photo;
+    public byte[] getSpeakerPhoto() {
+        return speakerPhoto;
     }
 
-    public void setSpeaker_photo(byte[] speaker_photo) {
-        this.speaker_photo = speaker_photo;
+    public void setSpeakerPhoto(byte[] speakerPhoto) {
+        this.speakerPhoto = speakerPhoto;
     }
 
     public List<Session> getSessions() {

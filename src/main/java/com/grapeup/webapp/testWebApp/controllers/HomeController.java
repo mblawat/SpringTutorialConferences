@@ -15,9 +15,7 @@ public class HomeController {
     private String appVersion;
 
     @GetMapping
-    public Map getStatus() {
-        Map map = new HashMap<String, String>();
-        map.put("appVersion", appVersion);
-        return map;
+    public Map<String, String> getStatus() {
+        return Map.of("appVersion", appVersion);
     }
 }

@@ -1,7 +1,7 @@
 package com.grapeup.webapp.testWebApp.repositories;
 
 import com.grapeup.webapp.testWebApp.models.Speaker;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 
-public interface SpeakerRepository extends JpaRepository<Speaker, Long> {
+public interface SpeakerRepository extends CrudRepository<Speaker, Long> {
 }

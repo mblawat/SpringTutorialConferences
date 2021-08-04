@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.grapeup.webapp</groupId>
-	<artifactId>testWebApp</artifactId>
+	<artifactId>test-web-app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>testWebApp</name>
 	<description>Demo project for Spring Boot</description>

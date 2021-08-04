@@ -4,17 +4,22 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity(name = "sessions")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Session {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long session_id;
+    @Column(name="session_id")
+    private Long sessionId;
 
-    private String session_name;
-    private String session_description;
-    private Integer session_length;
+    @Column(name="session_name")
+    private String sessionName;
+    @Column(name="session_description")
+    private String sessionDescription;
+    @Column(name="session_length")
+    private Integer sessionLength;
 
 
     @ManyToMany
@@ -26,36 +31,57 @@ public class Session {
 
     public Session() {}
 
-    public Long getSession_id() {
-        return session_id;
+    public Session(Long sessionId, String sessionName, String sessionDescription, Integer sessionLength, List<Speaker> speakers) {
+        this.sessionId = sessionId;
+        this.sessionName = sessionName;
+        this.sessionDescription = sessionDescription;
+        this.sessionLength = sessionLength;
+        this.speakers = speakers;
     }
 
-    public void setSession_id(Long session_id) {
-        this.session_id = session_id;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Session session = (Session) o;
+        return sessionId.equals(session.sessionId) && sessionName.equals(session.sessionName) && sessionDescription.equals(session.sessionDescription) && sessionLength.equals(session.sessionLength) && speakers.equals(session.speakers);
     }
 
-    public String getSession_name() {
-        return session_name;
+    @Override
+    public int hashCode() {
+        return Objects.hash(sessionId, sessionName, sessionDescription, sessionLength, speakers);
     }
 
-    public void setSession_name(String session_name) {
-        this.session_name = session_name;
+    public Long getSessionId() {
+        return sessionId;
     }
 
-    public String getSession_description() {
-        return session_description;
+    public void setSessionId(Long sessionId) {
+        this.sessionId = sessionId;
     }
 
-    public void setSession_description(String session_description) {
-        this.session_description = session_description;
+    public String getSessionName() {
+        return sessionName;
     }
 
-    public Integer getSession_length() {
-        return session_length;
+    public void setSessionName(String sessionName) {
+        this.sessionName = sessionName;
     }
 
-    public void setSession_length(Integer session_length) {
-        this.session_length = session_length;
+    public String getSessionDescription() {
+        return sessionDescription;
+    }
+
+    public void setSessionDescription(String sessionDescription) {
+        this.sessionDescription = sessionDescription;
+    }
+
+    public Integer getSessionLength() {
+        return sessionLength;
+    }
+
+    public void setSessionLength(Integer sessionLength) {
+        this.sessionLength = sessionLength;
     }
 
     public List<Speaker> getSpeakers() {
